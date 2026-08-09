@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "title": "Varita de Saúco con Núcleo de Pluma de Fénix (11 pulgadas)",
+    "description": "Varita de flexibilidad razonable, excelente para la transfiguración y encantamientos avanzados.",
+    "code": "OLL-WND-001",
+    "price": 7,
+    "status": true,
+    "stock": 15,
+    "category": "Varitas",
+    "thumbnails": []
+  },
+  {
+    "id": 2,
+    "title": "Escoba Nimbus 2000",
+    "description": "Lo último en velocidad y control aerodinámico para jugadores de Quidditch exigentes.",
+    "code": "QQ-NMB-2000",
+    "price": 250,
+    "status": true,
+    "stock": 4,
+    "category": "Quidditch",
+    "thumbnails": []
+  },
+  {
+    "id": 3,
+    "title": "El Libro Monstruoso de los Monstruos",
+    "description": "Texto obligatorio para Cuidado de Criaturas Mágicas. Acariciar el lomo antes de intentar abrir.",
+    "code": "FB-BK-008",
+    "price": 12,
+    "status": true,
+    "stock": 20,
+    "category": "Libros",
+    "thumbnails": []
+  },
+  {
+    "id": 4,
+    "title": "Túnica de Trabajo de Segunda Mano (Negra)",
+    "description": "Túnica escolar básica de tela resistente para uso diario en el colegio.",
+    "code": "MM-CLO-012",
+    "price": 3,
+    "status": true,
+    "stock": 50,
+    "category": "Indumentaria",
+    "thumbnails": []
+  },
+  {
+    "id": 5,
+    "title": "Caldero de Peltre (Tamaño 2)",
+    "description": "Caldero estándar para la elaboración de pociones básicas en el primer año.",
+    "code": "CAU-PTR-002",
+    "price": 15,
+    "status": true,
+    "stock": 30,
+    "category": "Pociones",
+    "thumbnails": []
+  },
+  {
+    "id": 6,
+    "title": "Pluma Vuelaproto",
+    "description": "Escribe automáticamente respuestas elaboradas mientras hablas.",
+    "code": "SCR-PEN-004",
+    "price": 8,
+    "status": false,
+    "stock": 0,
+    "category": "Papelería",
+    "thumbnails": []
+  },
+  {
+    "id": 7,
+    "title": "Surtidos Saltarines (Skiving Snackboxes)",
+    "description": "Dulces diseñados para enfermarte temporalmente y saltarte clases no deseadas.",
+    "code": "WWW-SNK-001",
+    "price": 5,
+    "status": true,
+    "stock": 45,
+    "category": "Bromas",
+    "thumbnails": []
+  },
+  {
+    "id": 8,
+    "title": "Telescopio de Latón Plegable",
+    "description": "Instrumento de precisión para observaciones nocturnas en la torre de Astronomía.",
+    "code": "WIS-TEL-003",
+    "price": 18,
+    "status": true,
+    "stock": 12,
+    "category": "Astronomía",
+    "thumbnails": []
+  },
+  {
+    "id": 9,
+    "title": "Lechuza Blanca (Screech Owl)",
+    "description": "Compañera fiel para la entrega de correo exprés y encomiendas nocturnas.",
+    "code": "EEY-OWL-002",
+    "price": 15,
+    "status": true,
+    "stock": 6,
+    "category": "Mascotas",
+    "thumbnails": []
+  },
+  {
+    "id": 10,
+    "title": "Kit de Ingredientes Básicos para Pociones",
+    "description": "Incluye ojos de escarabajo, cuerno de bicornio en polvo y ortigas secas.",
+    "code": "BOT-ING-001",
+    "price": 9,
+    "status": true,
+    "stock": 25,
+    "category": "Pociones",
+    "thumbnails": []
+  }
+]
