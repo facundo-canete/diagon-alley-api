@@ -7,6 +7,66 @@ const app = express();
 const productsPath = path.join(import.meta.dirname, "data", "products.json");
 const data = fs.readFileSync(productsPath, "utf-8");
 const products = JSON.parse(data);
+class Product {
+  constructor(
+    id,
+    title,
+    description,
+    code,
+    price,
+    status,
+    stock,
+    category,
+    thumbnails,
+  ) {
+    ((this.id = id),
+      (this.title = title),
+      (this.description = description),
+      (this.code = code),
+      (this.price = price),
+      (this.status = status),
+      (this.stock = stock),
+      (this.category = category),
+      (this.thumbnails = thumbnails));
+  }
+}
+const validations = [
+  {
+    field: "title",
+    type: "String",
+    message: "El título debe ser de tipo string.",
+  },
+  {
+    field: "description",
+    type: "String",
+    message: "La descripción debe ser de tipo string.",
+  },
+  {
+    field: "code",
+    type: "String",
+    message: "El código debe ser de tipo string.",
+  },
+  {
+    field: "price",
+    type: "Number",
+    message: "El precio debe ser de tipo number.",
+  },
+  {
+    field: "status",
+    type: "Boolean",
+    message: "El estado debe ser de tipo booleano.",
+  },
+  {
+    field: "stock",
+    type: "Number",
+    message: "El stock debe ser de tipo number.",
+  },
+  {
+    field: "category",
+    type: "String",
+    message: "La categoría debe ser de tipo string.",
+  },
+];
 
 // Middlewares
 app.use(express.json());
@@ -16,7 +76,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Hola, estás en la página principal" });
 });
 
-app.get("/api/productos", (req, res) => {
+app.get("/api/products", (req, res) => {
   try {
     const { category } = req.query;
 
@@ -33,10 +93,10 @@ app.get("/api/productos", (req, res) => {
   }
 });
 
-app.get("/api/productos/:code", (req, res) => {
+app.get("/api/products/:id", (req, res) => {
   try {
-    const { code } = req.params;
-    const product = products.find((pr) => pr.code === code);
+    const { id } = req.params;
+    const product = products.find((pr) => pr.id === id);
 
     if (!product) {
       return res
@@ -51,7 +111,7 @@ app.get("/api/productos/:code", (req, res) => {
   }
 });
 
-app.post("/api/productos", (req, res) => {
+app.post("/api/products", (req, res) => {
   const newId =
     products.length > 0 ? Math.max(...products.map((pr) => pr.id)) + 1 : 1;
   const reqTitle = req.body.title;
@@ -62,30 +122,6 @@ app.post("/api/productos", (req, res) => {
   const reqStock = req.body.stock;
   const reqCategory = req.body.category;
   const reqThumbnails = req.body.thumbnails;
-
-  class Product {
-    constructor(
-      id,
-      title,
-      description,
-      code,
-      price,
-      status,
-      stock,
-      category,
-      thumbnails,
-    ) {
-      ((this.id = id),
-        (this.title = title),
-        (this.description = description),
-        (this.code = code),
-        (this.price = price),
-        (this.status = status),
-        (this.stock = stock),
-        (this.category = category),
-        (this.thumbnails = thumbnails));
-    }
-  }
 
   try {
     const newProduct = new Product(
@@ -100,6 +136,18 @@ app.post("/api/productos", (req, res) => {
       reqThumbnails,
     );
 
+    for (const { field, type, message } of validations) {
+      if (typeof newProduct[field] !== type) {
+        return res.status(400).json({ success: false, error: message });
+      }
+    }
+
+    if (!Array.isArray(newProduct.thumbnails)) {
+      return res
+        .status(400)
+        .json({ success: false, error: "Las miniaturas deben ser un array." });
+    }
+
     products.push(newProduct);
     fs.writeFileSync(productsPath, JSON.stringify(products, null, 2));
 
@@ -110,7 +158,7 @@ app.post("/api/productos", (req, res) => {
   }
 });
 
-app.put("/api/productos/:id", (req, res) => {
+app.put("/api/products/:id", (req, res) => {
   try {
     const id = Number(req.params.id);
     const productIndex = products.findIndex((pr) => pr.id === id);
@@ -119,6 +167,28 @@ app.put("/api/productos/:id", (req, res) => {
       return res
         .status(404)
         .json({ success: false, error: `No existe producto con ID ${id}.` });
+    }
+
+    for (const { field, type, message } of validations) {
+      if (!(field in req.body)) {
+        return res
+          .status(400)
+          .json({ success: false, error: `Falta el campo "${field}".` });
+      }
+
+      if (typeof req.body[field] !== type) {
+        return res.status(400).json({ success: false, error: message });
+      }
+    }
+
+    if (!("thumbnails" in req.body)) {
+      return res
+        .status(400)
+        .json({ success: false, error: `Falta el campo "thumbnails".` });
+    } else if (!Array.isArray(req.body.thumbnails)) {
+      return res
+        .status(400)
+        .json({ success: false, error: "Las miniaturas deben ser un array." });
     }
 
     const updatedProduct = {
@@ -143,7 +213,7 @@ app.put("/api/productos/:id", (req, res) => {
   }
 });
 
-app.patch("/api/productos/:id", (req, res) => {
+app.patch("/api/products/:id", (req, res) => {
   try {
     const id = Number(req.params.id);
     const index = products.findIndex((pr) => pr.id === id);
@@ -154,9 +224,23 @@ app.patch("/api/productos/:id", (req, res) => {
         .json({ success: false, error: `No existe producto con ID ${id}.` });
     }
 
+    const updates = req.body;
+
+    for (const { field, type, message } of validations) {
+      if (field in updates && typeof updates[field] !== type) {
+        return res.status(400).json({ success: false, error: message });
+      }
+    }
+
+    if ("thumbnails" in updates && !Array.isArray(updates.thumbnails)) {
+      return res
+        .status(400)
+        .json({ success: false, error: "Las miniaturas deben ser un array." });
+    }
+
     const updatedProduct = {
       ...products[index],
-      ...req.body,
+      ...updates,
       id,
     };
 
@@ -170,7 +254,7 @@ app.patch("/api/productos/:id", (req, res) => {
   }
 });
 
-app.delete("/api/productos/:id", (req, res) => {
+app.delete("/api/products/:id", (req, res) => {
   try {
     const id = Number(req.params.id);
     const productIndex = products.findIndex((pr) => pr.id === id);
