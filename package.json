@@ -1,18 +1,25 @@
 {
   "name": "diagon-alley-api",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "API RESTful para la administración del e-commerce de Diagon Alley.",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "node --watch src/index.js"
+    "dev": "nodemon src/index.js"
   },
   "keywords": [
     "backend",
+    "express",
     "diagon-alley",
     "e-commerce"
   ],
   "author": "Facundo Cañete",
   "license": "MIT",
-  "type": "commonjs"
+  "type": "module",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
 }

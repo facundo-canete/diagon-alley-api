@@ -108,5 +108,115 @@
     "stock": 25,
     "category": "Pociones",
     "thumbnails": []
+  },
+  {
+    "id": 11,
+    "title": "Varita de Acebo y Pluma de Fénix (11 pulgadas)",
+    "description": "Varita con una conexión especial y gran capacidad para encantamientos de defensa.",
+    "code": "OLL-WND-002",
+    "price": 7,
+    "status": true,
+    "stock": 10,
+    "category": "Varitas",
+    "thumbnails": []
+  },
+  {
+    "id": 12,
+    "title": "Varita de Olmo y Fibra de Corazón de Dragón (12 pulgadas)",
+    "description": "Varita poderosa y elegante, ideal para magos con gran presencia e invocaciones complejas.",
+    "code": "OLL-WND-003",
+    "price": 10,
+    "status": true,
+    "stock": 8,
+    "category": "Varitas",
+    "thumbnails": []
+  },
+  {
+    "id": 13,
+    "title": "Varita de Sauce y Pelo de Unicornio (14 pulgadas)",
+    "description": "Varita de gran flexibilidad y tono claro, especialmente dotada para la curación.",
+    "code": "OLL-WND-004",
+    "price": 8,
+    "status": true,
+    "stock": 12,
+    "category": "Varitas",
+    "thumbnails": []
+  },
+  {
+    "id": 14,
+    "title": "Varita de Nogal Negro y Pelo de Thestral (13 pulgadas)",
+    "description": "Varita altamente temperamental que requiere un mago de firme voluntad.",
+    "code": "OLL-WND-005",
+    "price": 14,
+    "status": false,
+    "stock": 0,
+    "category": "Varitas",
+    "thumbnails": []
+  },
+  {
+    "id": 15,
+    "title": "Poción Multijugos (Frasco de 250ml)",
+    "description": "Permite transformar al usuario en la forma física de otra persona. Requiere ingrediente corporal.",
+    "code": "BOT-POC-002",
+    "price": 35,
+    "status": true,
+    "stock": 5,
+    "category": "Pociones",
+    "thumbnails": []
+  },
+  {
+    "id": 16,
+    "title": "Filtro de Muertos en Vida",
+    "description": "Poción durmiente sumamente potente. Provoca un sueño similar a la muerte.",
+    "code": "BOT-POC-003",
+    "price": 22,
+    "status": true,
+    "stock": 14,
+    "category": "Pociones",
+    "thumbnails": []
+  },
+  {
+    "id": 17,
+    "title": "Felix Felicis (Suerte Líquida - 5ml)",
+    "description": "Otorga un día de suerte extraordinaria al bebedor. Usar con extrema moderación.",
+    "code": "BOT-POC-004",
+    "price": 100,
+    "status": true,
+    "stock": 2,
+    "category": "Pociones",
+    "thumbnails": []
+  },
+  {
+    "id": 18,
+    "title": "Poción Crece-Huesos",
+    "description": "Restaura y regenera huesos desaparecidos o fracturados. Sabor amargo e intenso.",
+    "code": "BOT-POC-005",
+    "price": 12,
+    "status": true,
+    "stock": 18,
+    "category": "Pociones",
+    "thumbnails": []
+  },
+  {
+    "id": 19,
+    "title": "Historia de la Magia por Bathilda Bagshot",
+    "description": "Texto histórico fundamental sobre los acontecimientos del mundo mágico desde la Edad Media.",
+    "code": "FB-BK-001",
+    "price": 5,
+    "status": true,
+    "stock": 40,
+    "category": "Libros",
+    "thumbnails": []
+  },
+  {
+    "id": 20,
+    "title": "Las Fuerzas Oscuras: Guía para la Autoprotección",
+    "description": "Manual básico de Defensa Contra las Artes Oscuras obligatorio para primer año.",
+    "code": "FB-BK-002",
+    "price": 6,
+    "status": true,
+    "stock": 35,
+    "category": "Libros",
+    "thumbnails": []
   }
 ]
