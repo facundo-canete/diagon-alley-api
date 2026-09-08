@@ -208,24 +208,19 @@ router.post("/:cid/products/:pid", (req, res) => {
 // Actualizar todos los productos del carrito
 router.put("/:cid", (req, res) => {
   try {
-    // Recibo el cid del carrito
     const { cid } = req.params;
 
-    // Busco y obtengo el carrito
     const cartIndex = carts.findIndex((cr) => cr.cid === cid);
     const cart = carts[cartIndex];
 
-    // Valido si existe el carrito
     if (cartIndex === -1) {
       return res
         .status(404)
         .json({ success: false, error: `No existe carrito con ID ${cid}.` });
     }
 
-    // Recibo los productos enviados por el usuario
     const rawProducts = req.body.products;
 
-    // Valido que haya llegado un array de productos
     if (!Array.isArray(rawProducts)) {
       return res.status(400).json({
         success: false,
@@ -233,7 +228,6 @@ router.put("/:cid", (req, res) => {
       });
     }
 
-    // Valido los tipos de datos de los productos
     for (const item of rawProducts) {
       for (const { field, type, message } of cartItemValidations) {
         if (!(field in item)) {
@@ -246,7 +240,6 @@ router.put("/:cid", (req, res) => {
       }
     }
 
-    // Unifico cantidades de los productos solicitados con pid repetidos
     const mergedProducts = rawProducts.reduce((acc, item) => {
       const existingProduct = acc.find((p) => p.pid === item.pid);
       if (existingProduct) {
@@ -258,12 +251,10 @@ router.put("/:cid", (req, res) => {
       return acc;
     }, []);
 
-    // Obtengo la lista limpia de productos solicitados
     for (const prod of mergedProducts) {
       const productIndex = products.findIndex((pr) => pr.pid === prod.pid);
       const product = products[productIndex];
 
-      // Valido si existe producto con ese pid
       if (productIndex === -1) {
         return res.status(404).json({
           success: false,
@@ -271,7 +262,6 @@ router.put("/:cid", (req, res) => {
         });
       }
 
-      // Busco si ese producto ya estaba reservado en el carrito
       const itemEnCarritoViejo = cart.products.find((p) => p.pid === prod.pid);
       const cantidadADevolver = itemEnCarritoViejo
         ? itemEnCarritoViejo.quantity
@@ -290,7 +280,6 @@ router.put("/:cid", (req, res) => {
       }
     }
 
-    // Devuelvo al stock los productos reservados en carrito
     const productosEnCarrito = [...cart.products];
 
     for (const prodDevuelto of productosEnCarrito) {
@@ -305,10 +294,8 @@ router.put("/:cid", (req, res) => {
       }
     }
 
-    // Saco todos los productos del carrito
     cart.products = [];
 
-    // Agrego los nuevos productos al carrito
     for (const newProductToCart of mergedProducts) {
       const productIndex = products.findIndex(
         (p) => p.pid === newProductToCart.pid,
