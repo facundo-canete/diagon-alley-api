@@ -1,0 +1,34 @@
+[
+  {
+    "cid": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+    "products": [
+      {
+        "pid": "94b6616dbc32aae78a6ff9a872b821230f93816b427f01ebbf8ea6dbf08f131e",
+        "details": {
+          "title": "Varita de Saúco con Núcleo de Pluma de Fénix (11 pulgadas)",
+          "description": "Varita de flexibilidad razonable, excelente para la transfiguración y encantamientos avanzados.",
+          "code": "OLL-WND-001",
+          "category": "Varitas",
+          "thumbnails": []
+        },
+        "price": 7,
+        "quantity": 3,
+        "subtotal": 21
+      },
+      {
+        "pid": "0623849aa30538c57692b08de190c49589d8721c96fc7a00a2b94d21fe38fa4c",
+        "details": {
+          "title": "Escoba Nimbus 2000",
+          "description": "Lo último en velocidad y control aerodinámico para jugadores de Quidditch exigentes.",
+          "code": "QQ-NMB-2000",
+          "category": "Quidditch",
+          "thumbnails": []
+        },
+        "price": 250,
+        "quantity": 1,
+        "subtotal": 250
+      }
+    ],
+    "total": 271
+  }
+]

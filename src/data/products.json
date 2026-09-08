@@ -1,28 +1,28 @@
 [
   {
-    "id": 1,
+    "pid": "94b6616dbc32aae78a6ff9a872b821230f93816b427f01ebbf8ea6dbf08f131e",
     "title": "Varita de Saúco con Núcleo de Pluma de Fénix (11 pulgadas)",
     "description": "Varita de flexibilidad razonable, excelente para la transfiguración y encantamientos avanzados.",
     "code": "OLL-WND-001",
     "price": 7,
     "status": true,
-    "stock": 15,
+    "stock": 12,
     "category": "Varitas",
     "thumbnails": []
   },
   {
-    "id": 2,
+    "pid": "0623849aa30538c57692b08de190c49589d8721c96fc7a00a2b94d21fe38fa4c",
     "title": "Escoba Nimbus 2000",
     "description": "Lo último en velocidad y control aerodinámico para jugadores de Quidditch exigentes.",
     "code": "QQ-NMB-2000",
     "price": 250,
     "status": true,
-    "stock": 4,
+    "stock": 3,
     "category": "Quidditch",
     "thumbnails": []
   },
   {
-    "id": 3,
+    "pid": "1a06c14aa286e53b5ff7172556bfad42823efcd73c721654f97ce55821967632",
     "title": "El Libro Monstruoso de los Monstruos",
     "description": "Texto obligatorio para Cuidado de Criaturas Mágicas. Acariciar el lomo antes de intentar abrir.",
     "code": "FB-BK-008",
@@ -33,7 +33,7 @@
     "thumbnails": []
   },
   {
-    "id": 4,
+    "pid": "65c9779f7b7b939366d962a7ed94daf8144d1e850ecad34b821396928db74dd6",
     "title": "Túnica de Trabajo de Segunda Mano (Negra)",
     "description": "Túnica escolar básica de tela resistente para uso diario en el colegio.",
     "code": "MM-CLO-012",
@@ -44,7 +44,7 @@
     "thumbnails": []
   },
   {
-    "id": 5,
+    "pid": "1f9e54f861b44d45dbc5f68a7cbccd2965fbdc4594cb4a0f6ebec45e3f413a38",
     "title": "Caldero de Peltre (Tamaño 2)",
     "description": "Caldero estándar para la elaboración de pociones básicas en el primer año.",
     "code": "CAU-PTR-002",
@@ -55,7 +55,7 @@
     "thumbnails": []
   },
   {
-    "id": 6,
+    "pid": "ef05c65421b42cd0a175e5351618b11cbcc3c50acfb5f3f43d2d4471b462b755",
     "title": "Pluma Vuelaproto",
     "description": "Escribe automáticamente respuestas elaboradas mientras hablas.",
     "code": "SCR-PEN-004",
@@ -66,7 +66,7 @@
     "thumbnails": []
   },
   {
-    "id": 7,
+    "pid": "7547a045261dfd8662e5cba3cea4baf6566edce94371bff0561b7c797d99df75",
     "title": "Surtidos Saltarines (Skiving Snackboxes)",
     "description": "Dulces diseñados para enfermarte temporalmente y saltarte clases no deseadas.",
     "code": "WWW-SNK-001",
@@ -77,7 +77,7 @@
     "thumbnails": []
   },
   {
-    "id": 8,
+    "pid": "e45d06efaac4683df34938435ff397f999a8607f6475288d80028a819d36ba5b",
     "title": "Telescopio de Latón Plegable",
     "description": "Instrumento de precisión para observaciones nocturnas en la torre de Astronomía.",
     "code": "WIS-TEL-003",
@@ -88,7 +88,7 @@
     "thumbnails": []
   },
   {
-    "id": 9,
+    "pid": "032ec09f02acdd078c999af1688c031dddcb50aba162748ad9cd039db4405717",
     "title": "Lechuza Blanca (Screech Owl)",
     "description": "Compañera fiel para la entrega de correo exprés y encomiendas nocturnas.",
     "code": "EEY-OWL-002",
@@ -99,7 +99,7 @@
     "thumbnails": []
   },
   {
-    "id": 10,
+    "pid": "7fe0f98eeaecc71db0bee8140af36363dfa9aa8305c248600329ab6de97c11c2",
     "title": "Kit de Ingredientes Básicos para Pociones",
     "description": "Incluye ojos de escarabajo, cuerno de bicornio en polvo y ortigas secas.",
     "code": "BOT-ING-001",
@@ -107,116 +107,6 @@
     "status": true,
     "stock": 25,
     "category": "Pociones",
-    "thumbnails": []
-  },
-  {
-    "id": 11,
-    "title": "Varita de Acebo y Pluma de Fénix (11 pulgadas)",
-    "description": "Varita con una conexión especial y gran capacidad para encantamientos de defensa.",
-    "code": "OLL-WND-002",
-    "price": 7,
-    "status": true,
-    "stock": 10,
-    "category": "Varitas",
-    "thumbnails": []
-  },
-  {
-    "id": 12,
-    "title": "Varita de Olmo y Fibra de Corazón de Dragón (12 pulgadas)",
-    "description": "Varita poderosa y elegante, ideal para magos con gran presencia e invocaciones complejas.",
-    "code": "OLL-WND-003",
-    "price": 10,
-    "status": true,
-    "stock": 8,
-    "category": "Varitas",
-    "thumbnails": []
-  },
-  {
-    "id": 13,
-    "title": "Varita de Sauce y Pelo de Unicornio (14 pulgadas)",
-    "description": "Varita de gran flexibilidad y tono claro, especialmente dotada para la curación.",
-    "code": "OLL-WND-004",
-    "price": 8,
-    "status": true,
-    "stock": 12,
-    "category": "Varitas",
-    "thumbnails": []
-  },
-  {
-    "id": 14,
-    "title": "Varita de Nogal Negro y Pelo de Thestral (13 pulgadas)",
-    "description": "Varita altamente temperamental que requiere un mago de firme voluntad.",
-    "code": "OLL-WND-005",
-    "price": 14,
-    "status": false,
-    "stock": 0,
-    "category": "Varitas",
-    "thumbnails": []
-  },
-  {
-    "id": 15,
-    "title": "Poción Multijugos (Frasco de 250ml)",
-    "description": "Permite transformar al usuario en la forma física de otra persona. Requiere ingrediente corporal.",
-    "code": "BOT-POC-002",
-    "price": 35,
-    "status": true,
-    "stock": 5,
-    "category": "Pociones",
-    "thumbnails": []
-  },
-  {
-    "id": 16,
-    "title": "Filtro de Muertos en Vida",
-    "description": "Poción durmiente sumamente potente. Provoca un sueño similar a la muerte.",
-    "code": "BOT-POC-003",
-    "price": 22,
-    "status": true,
-    "stock": 14,
-    "category": "Pociones",
-    "thumbnails": []
-  },
-  {
-    "id": 17,
-    "title": "Felix Felicis (Suerte Líquida - 5ml)",
-    "description": "Otorga un día de suerte extraordinaria al bebedor. Usar con extrema moderación.",
-    "code": "BOT-POC-004",
-    "price": 100,
-    "status": true,
-    "stock": 2,
-    "category": "Pociones",
-    "thumbnails": []
-  },
-  {
-    "id": 18,
-    "title": "Poción Crece-Huesos",
-    "description": "Restaura y regenera huesos desaparecidos o fracturados. Sabor amargo e intenso.",
-    "code": "BOT-POC-005",
-    "price": 12,
-    "status": true,
-    "stock": 18,
-    "category": "Pociones",
-    "thumbnails": []
-  },
-  {
-    "id": 19,
-    "title": "Historia de la Magia por Bathilda Bagshot",
-    "description": "Texto histórico fundamental sobre los acontecimientos del mundo mágico desde la Edad Media.",
-    "code": "FB-BK-001",
-    "price": 5,
-    "status": true,
-    "stock": 40,
-    "category": "Libros",
-    "thumbnails": []
-  },
-  {
-    "id": 20,
-    "title": "Las Fuerzas Oscuras: Guía para la Autoprotección",
-    "description": "Manual básico de Defensa Contra las Artes Oscuras obligatorio para primer año.",
-    "code": "FB-BK-002",
-    "price": 6,
-    "status": true,
-    "stock": 35,
-    "category": "Libros",
     "thumbnails": []
   }
 ]

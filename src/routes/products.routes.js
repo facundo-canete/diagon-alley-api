@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import crypto from "crypto";
 import { Router } from "express";
 
 const router = Router();
@@ -10,11 +11,19 @@ const productsPath = path.join(
   "data",
   "products.json",
 );
-const data = fs.readFileSync(productsPath, "utf-8");
-const products = JSON.parse(data);
+
+const productsData = fs.readFileSync(productsPath, "utf-8");
+const products = JSON.parse(productsData);
+
+function createNewHash(cont) {
+  const contOK = String(cont);
+  const hash = crypto.createHash("sha256").update(contOK).digest("hex");
+  return hash;
+}
+
 class Product {
   constructor(
-    id,
+    pid,
     title,
     description,
     code,
@@ -24,15 +33,15 @@ class Product {
     category,
     thumbnails,
   ) {
-    ((this.id = id),
-      (this.title = title),
-      (this.description = description),
-      (this.code = code),
-      (this.price = price),
-      (this.status = status),
-      (this.stock = stock),
-      (this.category = category),
-      (this.thumbnails = thumbnails));
+    this.pid = pid;
+    this.title = title;
+    this.description = description;
+    this.code = code;
+    this.price = price;
+    this.status = status;
+    this.stock = stock;
+    this.category = category;
+    this.thumbnails = thumbnails;
   }
 }
 const validations = [
@@ -85,32 +94,31 @@ router.get("/", (req, res) => {
 
     return res.status(200).json({ success: true, payload: result });
   } catch (error) {
-    console.error(`Hubo un error: ${error.message}`);
+    console.error(`Hubo un error: ${error.message}.`);
     return res.status(500).json({ success: false, error: error.message });
   }
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:pid", (req, res) => {
   try {
-    const { id } = req.params;
-    const product = products.find((pr) => pr.id === Number(id));
+    const { pid } = req.params;
+    const product = products.find((pr) => pr.pid === pid);
 
     if (!product) {
-      return res
-        .status(404)
-        .json({ success: false, error: "Producto no encontrado" });
+      return res.status(404).json({
+        success: false,
+        error: `Product con ID ${pid} no encontrado.`,
+      });
     }
 
     return res.status(200).json({ success: true, payload: product });
   } catch (error) {
-    console.error(`Hubo un error: ${error.message}`);
+    console.error(`Hubo un error: ${error.message}.`);
     return res.status(500).json({ success: false, error: error.message });
   }
 });
 
 router.post("/", (req, res) => {
-  const newId =
-    products.length > 0 ? Math.max(...products.map((pr) => pr.id)) + 1 : 1;
   const reqTitle = req.body.title;
   const reqDescription = req.body.description;
   const reqCode = req.body.code;
@@ -119,10 +127,12 @@ router.post("/", (req, res) => {
   const reqStock = req.body.stock;
   const reqCategory = req.body.category;
   const reqThumbnails = req.body.thumbnails;
+  const hashedPid = createNewHash(reqCode);
 
   try {
+    const repeatedCode = products.some((pr) => pr.code === reqCode);
     const newProduct = new Product(
-      newId,
+      hashedPid,
       reqTitle,
       reqDescription,
       reqCode,
@@ -139,6 +149,13 @@ router.post("/", (req, res) => {
       }
     }
 
+    if (repeatedCode === true) {
+      return res.status(400).json({
+        success: false,
+        error: "El código debe ser único por producto.",
+      });
+    }
+
     if (!Array.isArray(newProduct.thumbnails)) {
       return res
         .status(400)
@@ -150,20 +167,20 @@ router.post("/", (req, res) => {
 
     return res.status(201).json({ success: true, payload: newProduct });
   } catch (error) {
-    console.error(`Hubo un error: ${error.message}`);
+    console.error(`Hubo un error: ${error.message}.`);
     return res.status(500).json({ success: false, error: error.message });
   }
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:pid", (req, res) => {
   try {
-    const id = Number(req.params.id);
-    const productIndex = products.findIndex((pr) => pr.id === id);
+    const pid = req.params.pid;
+    const productIndex = products.findIndex((pr) => pr.pid === pid);
 
     if (productIndex === -1) {
       return res
         .status(404)
-        .json({ success: false, error: `No existe producto con ID ${id}.` });
+        .json({ success: false, error: `No existe producto con ID ${pid}.` });
     }
 
     for (const { field, type, message } of validations) {
@@ -189,7 +206,7 @@ router.put("/:id", (req, res) => {
     }
 
     const updatedProduct = {
-      id,
+      pid,
       title: req.body.title,
       description: req.body.description,
       code: req.body.code,
@@ -205,20 +222,20 @@ router.put("/:id", (req, res) => {
 
     return res.status(200).json({ success: true, payload: updatedProduct });
   } catch (error) {
-    console.error(`Hubo un error: ${error.message}`);
+    console.error(`Hubo un error: ${error.message}.`);
     return res.status(500).json({ success: false, error: error.message });
   }
 });
 
-router.patch("/:id", (req, res) => {
+router.patch("/:pid", (req, res) => {
   try {
-    const id = Number(req.params.id);
-    const index = products.findIndex((pr) => pr.id === id);
+    const pid = req.params.pid;
+    const index = products.findIndex((pr) => pr.pid === pid);
 
     if (index === -1) {
       return res
         .status(404)
-        .json({ success: false, error: `No existe producto con ID ${id}.` });
+        .json({ success: false, error: `No existe producto con ID ${pid}.` });
     }
 
     const updates = req.body;
@@ -238,7 +255,7 @@ router.patch("/:id", (req, res) => {
     const updatedProduct = {
       ...products[index],
       ...updates,
-      id,
+      pid,
     };
 
     products[index] = updatedProduct;
@@ -246,20 +263,20 @@ router.patch("/:id", (req, res) => {
 
     return res.status(200).json({ success: true, payload: updatedProduct });
   } catch (error) {
-    console.error(`Hubo un error: ${error.message}`);
+    console.error(`Hubo un error: ${error.message}.`);
     return res.status(500).json({ success: false, error: error.message });
   }
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:pid", (req, res) => {
   try {
-    const id = Number(req.params.id);
-    const productIndex = products.findIndex((pr) => pr.id === id);
+    const pid = req.params.pid;
+    const productIndex = products.findIndex((pr) => pr.pid === pid);
 
     if (productIndex === -1) {
       return res
         .status(404)
-        .json({ success: false, error: `No existe producto con ID ${id}.` });
+        .json({ success: false, error: `No existe producto con ID ${pid}.` });
     }
 
     const [deletedProduct] = products.splice(productIndex, 1);
@@ -267,7 +284,18 @@ router.delete("/:id", (req, res) => {
 
     return res.status(200).json({ success: true, payload: deletedProduct });
   } catch (error) {
-    console.error(`Hubo un error: ${error.message}`);
+    console.error(`Hubo un error: ${error.message}.`);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+router.delete("/", (req, res) => {
+  try {
+    products.length = 0;
+    fs.writeFileSync(productsPath, JSON.stringify(products, null, 2));
+    return res.status(200).json({ success: true, payload: products });
+  } catch (error) {
+    console.error(`Hubo un error: ${error.message}.`);
     return res.status(500).json({ success: false, error: error.message });
   }
 });
