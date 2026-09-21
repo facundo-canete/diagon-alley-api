@@ -238,6 +238,13 @@ router.put("/:cid", (req, res) => {
           return res.status(400).json({ success: false, error: message });
         }
       }
+
+      if (!Number.isInteger(item.quantity)) {
+        return res.status(400).json({
+          success: false,
+          error: "La cantidad debe ser un número entero.",
+        });
+      }
     }
 
     const mergedProducts = rawProducts.reduce((acc, item) => {
@@ -275,7 +282,7 @@ router.put("/:cid", (req, res) => {
       } else if (prod.quantity > stockDisponible) {
         return res.status(400).json({
           success: false,
-          error: `La cantidad solicitada para el producto ${prod.pid} excede el stock disponible.`,
+          error: `La cantidad solicitada para el producto con ID ${prod.pid} excede el stock disponible.`,
         });
       }
     }
@@ -350,7 +357,100 @@ router.put("/:cid", (req, res) => {
 // Actualizar únicamente la cantidad de un producto
 router.put("/:cid/products/:pid", (req, res) => {
   try {
-  } catch (error) {}
+    const { cid, pid } = req.params;
+
+    const cartIndex = carts.findIndex((cr) => cr.cid === cid);
+    const cart = carts[cartIndex];
+
+    const productIndex = products.findIndex((pr) => pr.pid === pid);
+    const product = products[productIndex];
+
+    if (cartIndex === -1) {
+      return res
+        .status(400)
+        .json({ success: false, error: `No existe carrito con ID ${cid}.` });
+    } else if (productIndex === -1) {
+      return res
+        .status(400)
+        .json({ success: false, error: `No existe producto con ID ${pid}.` });
+    }
+
+    const newQuantity = req.body.quantity;
+
+    if (
+      typeof newQuantity !== "number" ||
+      !Number.isInteger(newQuantity) ||
+      newQuantity <= 0
+    ) {
+      return res.status(400).json({
+        success: false,
+        error: "La cantidad debe ser un número entero positivo.",
+      });
+    }
+
+    const productoEnCarritoViejo = cart.products.find((p) => p.pid === pid);
+    if (!productoEnCarritoViejo) {
+      return res.status(404).json({
+        success: false,
+        error: `Producto con ID ${pid} no encontrado en el carrito.`,
+      });
+    }
+
+    const cantidadADevolver = productoEnCarritoViejo.quantity;
+    const stockDisponible = product.stock + cantidadADevolver;
+
+    if (stockDisponible === 0) {
+      return res
+        .status(400)
+        .json({ success: false, error: "Producto no disponible." });
+    } else if (newQuantity > stockDisponible) {
+      return res.status(400).json({
+        success: false,
+        error: `La cantidad solicitada para el producto con ID ${pid} excede el stock disponible.`,
+      });
+    } else if (newQuantity === productoEnCarritoViejo.quantity) {
+      return res.status(200).json({
+        success: true,
+        message: `La cantidad de este producto ya es ${productoEnCarritoViejo.quantity}.`,
+        payload: productoEnCarritoViejo,
+      });
+    }
+
+    const newSubtotal = productoEnCarritoViejo.price * newQuantity;
+
+    const updatedProductInCart = {
+      ...productoEnCarritoViejo,
+      quantity: newQuantity,
+      subtotal: newSubtotal,
+    };
+
+    const productInCartToUpdateIndex = cart.products.findIndex(
+      (p) => p.pid === pid,
+    );
+    cart.products[productInCartToUpdateIndex] = updatedProductInCart;
+
+    const stockFinal = stockDisponible - newQuantity;
+
+    const updatedProduct = {
+      ...product,
+      stock: stockFinal,
+      status: stockFinal === 0 ? false : true,
+    };
+
+    products[productIndex] = updatedProduct;
+
+    cart.total = cart.products.reduce((acc, p) => acc + p.subtotal, 0);
+
+    fs.writeFileSync(productsPath, JSON.stringify(products, null, 2));
+    fs.writeFileSync(cartsPath, JSON.stringify(carts, null, 2));
+
+    return res
+      .status(200)
+      .json({ success: true, payload: updatedProductInCart });
+  } catch (error) {
+    console.error(`Hubo un error: ${error.message}`);
+    return res.status(500).json({ success: false, error: error.message });
+  }
 });
 
 // Vaciar el carrito completo
