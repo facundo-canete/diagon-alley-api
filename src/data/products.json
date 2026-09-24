@@ -6,7 +6,7 @@
     "code": "OLL-WND-001",
     "price": 7,
     "status": true,
-    "stock": 12,
+    "stock": 15,
     "category": "Varitas",
     "thumbnails": []
   },
@@ -17,7 +17,7 @@
     "code": "QQ-NMB-2000",
     "price": 250,
     "status": true,
-    "stock": 3,
+    "stock": 4,
     "category": "Quidditch",
     "thumbnails": []
   },
