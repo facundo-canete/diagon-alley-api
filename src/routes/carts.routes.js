@@ -456,13 +456,106 @@ router.put("/:cid/products/:pid", (req, res) => {
 // Vaciar el carrito completo
 router.delete("/:cid", (req, res) => {
   try {
-  } catch (error) {}
+    const { cid } = req.params;
+
+    const cartIndex = carts.findIndex((cr) => cr.cid === cid);
+    const cart = carts[cartIndex];
+
+    if (cartIndex === -1) {
+      return res
+        .status(404)
+        .json({ success: false, error: `No existe carrito con ID ${cid}.` });
+    }
+
+    const productosEnCarrito = cart.products;
+
+    for (const item of productosEnCarrito) {
+      const productoADevolverIndex = products.findIndex(
+        (pr) => pr.pid === item.pid,
+      );
+      const productoADevolver = products[productoADevolverIndex];
+
+      const updatedStock = productoADevolver.stock + item.quantity;
+      const checkedStatus = updatedStock > 0 ? true : false;
+
+      const updatedProduct = {
+        ...productoADevolver,
+        stock: updatedStock,
+        status: checkedStatus,
+      };
+
+      products[productoADevolverIndex] = updatedProduct;
+    }
+
+    productosEnCarrito.length = 0;
+
+    cart.total = 0;
+
+    fs.writeFileSync(productsPath, JSON.stringify(products, null, 2));
+    fs.writeFileSync(cartsPath, JSON.stringify(carts, null, 2));
+
+    return res.status(200).json({ success: true, payload: cart });
+  } catch (error) {
+    console.error(`Hubo un error: ${error.message}.`);
+    return res.status(500).json({ success: false, error: error.message });
+  }
 });
 
 // Eliminar producto del carrito
 router.delete("/:cid/products/:pid", (req, res) => {
   try {
-  } catch (error) {}
+    const { cid, pid } = req.params;
+
+    const cartIndex = carts.findIndex((cr) => cr.cid === cid);
+    const cart = carts[cartIndex];
+
+    const productIndex = products.findIndex((pr) => pr.pid === pid);
+    const product = products[productIndex];
+
+    if (cartIndex === -1) {
+      return res
+        .status(404)
+        .json({ success: false, error: `No existe carrito con ID ${cid}.` });
+    } else if (productIndex === -1) {
+      return res
+        .status(404)
+        .json({ success: false, error: `No existe producto con ID ${pid}.` });
+    }
+
+    const productToDeleteIndex = cart.products.findIndex(
+      (pr) => pr.pid === pid,
+    );
+    const productToDelete = cart.products[productToDeleteIndex];
+    if (productToDeleteIndex === -1) {
+      return res.status(404).json({
+        success: false,
+        error: `Producto con ID ${pid} no encontrado en el carrito.`,
+      });
+    }
+
+    const quantityToReturn = productToDelete.quantity;
+    const updatedStock = product.stock + quantityToReturn;
+
+    const updatedProduct = {
+      ...product,
+      stock: updatedStock,
+      status: updatedStock === 0 ? false : true,
+    };
+
+    products[productIndex] = updatedProduct;
+
+    const [deletedProduct] = cart.products.splice(productToDeleteIndex, 1);
+
+    cart.total = cart.products.reduce((acc, p) => acc + p.subtotal, 0);
+
+    fs.writeFileSync(productsPath, JSON.stringify(products, null, 2));
+    fs.writeFileSync(cartsPath, JSON.stringify(carts, null, 2));
+
+    return res.status(200).json({ success: true, payload: deletedProduct });
+  } catch (error) {
+    console.error(`Hubo un error: ${error.message}.`);
+    return res.status(500).json({ success: false, error: error.message });
+  }
 });
 
 export default router;
